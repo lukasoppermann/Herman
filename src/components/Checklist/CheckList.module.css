@@ -1,0 +1,25 @@
+.CheckList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+.Item {
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--fontSize-default);
+  span {
+    text-align: left;
+    color: var(--fgColor-default);
+  }
+  input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: 6px;
+    height: var(--fontSize-default);
+    
+    &:checked ~ span {
+      text-decoration: line-through;
+    }
+  }
+}

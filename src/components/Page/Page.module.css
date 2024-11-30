@@ -1,0 +1,21 @@
+.Page {
+  background: white;
+  max-width: calc(100% - 6rem);
+  margin: 2rem 2rem;
+  height: auto;
+  padding: 1rem;
+  box-shadow: none;
+  display: flex;
+  flex-basis: auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media print {
+  .Page {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    gap: 0;
+  }
+}

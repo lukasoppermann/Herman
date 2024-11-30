@@ -1,0 +1,66 @@
+.Recipe {
+  font-family: monospace;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: var(--fgColor-default);
+  header {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid var(--borderColor-emphasis);
+    h1 {
+      font-size: inherit;
+      margin: 0;
+      font-weight: 700;
+      padding: 0 6px;
+      background-color: var(--borderColor-emphasis);
+      color: var(--fgColor-onEmphasis)
+    }
+    .HeaderHydration {
+      display: none;
+      margin-left: auto;
+      align-self: center;
+      font-size: var(--fontSize-default);
+      color: var(--fgColor-default);
+    }
+    .BreadId {
+      display: none;
+    }
+  }
+}
+.Recipe__parameters {
+  margin-bottom: 16px;
+}
+.Recipe__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.Recipe__process_notes {
+  display: none;
+  flex-wrap: wrap;
+}
+.Recipe__process_notes__item {
+  flex-basis: 50%;
+  text-align: left;
+  font-size: var(--fontSize-large);
+}
+@media print {
+  .Recipe {
+    width: calc(50%);
+    padding: 8px;
+    border: 1px solid var(--fgColor-default);
+    header {
+      .HeaderHydration, .BreadId {
+        display: block;
+      }
+    }
+  }
+  .Recipe__parameters {
+    display: none;
+  }
+  .Recipe__process_notes{
+    display: flex;
+  }
+}

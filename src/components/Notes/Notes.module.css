@@ -1,0 +1,14 @@
+.Notes {
+  overflow: hidden;
+  .Lines {
+    margin-top: -4px;
+    min-height: 100%;
+    border-bottom: 1px solid var(--borderColor-muted);
+    background-image: repeating-linear-gradient(
+      white,
+      white 24px,
+      var(--borderColor-muted) 24px,
+      var(--borderColor-muted) 25px
+    );
+  }
+}

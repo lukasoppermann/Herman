@@ -1,0 +1,8 @@
+.Headline {
+  font-size: var(--fontSize-small);
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: var(--fgColor-muted);
+}
