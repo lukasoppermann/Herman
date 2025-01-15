@@ -1,5 +1,5 @@
 .Recipe {
-  font-family: monospace;
+  font-family: var(--font-family-mono);
   font-size: 1rem;
   box-sizing: border-box;
   color: var(--fgColor-default);

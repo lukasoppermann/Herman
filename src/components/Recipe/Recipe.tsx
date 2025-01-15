@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import classes from './Recipe.module.css'
-import { CheckList } from '../Checklist/CheckList';
 import Input from '../Input/Input';
 import { calcIngredientWeights } from '../../utils/calcIngredientWeights';
-// import { useLocalStorageState } from 'use-local-storage-state'
 import { Notes } from '../Notes/Notes';
+import { CheckList } from '../Checklist/CheckList';
 
 export type recipeDetails = {
   weight: string;
@@ -64,7 +63,21 @@ export const Recipe: React.FC<RecipeProps> = ({updateState, state = initialRecip
     });
   }, [weight, hydration, innoculation, levinHydration, salt, roomTemp, desiredTemp])
 
-
+  const renderStep = (text: string) => {
+    const regex = /{(\d+)% of (\w+)}/;
+    const match = text.match(regex);
+    console.log(match);
+    
+    if (match) {
+      const percentage = parseFloat(match[1]);
+      const ingredient = match[2].toLowerCase();
+      if (ingredients[ingredient] !== undefined) {
+        const calculatedValue = (percentage / 100) * ingredients[ingredient];
+        return text.replace(regex, `${calculatedValue.toFixed(0)}g`);
+      }
+    }
+    return text;
+  };
 
   return (
     <div className={`${classes.Recipe} ${className}`}>
@@ -73,12 +86,12 @@ export const Recipe: React.FC<RecipeProps> = ({updateState, state = initialRecip
       </header>
       {updateState && (
       <div className={classes.Recipe__parameters}>
-        <Input label="Total weight:" value={weight} onChange={(e) => updateState({weight: e.target.value})} placeholder="in g" unit='g' />
-        <Input label="Hydration:" value={hydration} onChange={(e) => updateState({hydration: e.target.value})} placeholder="in %" unit='%' />
-        <Input label="Water reserve:" value={waterReserve} onChange={(e) => updateState({waterReserve: e.target.value})} placeholder="in %" unit='%' />
-        <Input label="Innoculation:" value={innoculation} onChange={(e) => updateState({innoculation: e.target.value})} placeholder="in %" unit='%' />
-        <Input label="Salt:" value={salt} onChange={(e) => updateState({salt: e.target.value})} placeholder="in %" unit='%' />
-        <Input label="Levin hydration:" value={levinHydration} onChange={(e) => updateState({levinHydration: e.target.value})} placeholder="in %" unit='%' />
+        <Input label="Total weight:" value={weight} onChange={(e) => updateState({weight: e.target.value})} placeholder="in g" suffix='g' />
+        <Input label="Hydration:" value={hydration} onChange={(e) => updateState({hydration: e.target.value})} placeholder="in %" suffix='%' />
+        <Input label="Water reserve:" value={waterReserve} onChange={(e) => updateState({waterReserve: e.target.value})} placeholder="in %" suffix='%' />
+        <Input label="Innoculation:" value={innoculation} onChange={(e) => updateState({innoculation: e.target.value})} placeholder="in %" suffix='%' />
+        <Input label="Salt:" value={salt} onChange={(e) => updateState({salt: e.target.value})} placeholder="in %" suffix='%' />
+        <Input label="Levin hydration:" value={levinHydration} onChange={(e) => updateState({levinHydration: e.target.value})} placeholder="in %" suffix='%' />
         {/* <Input label="Room temp:" value={roomTemp} onChange={(e) => updateState({roomTemp: e.target.value})} placeholder="in °C" unit='°C' />
         <Input label="Desired temp:" value={desiredTemp} onChange={(e) => updateState({desiredTemp: e.target.value})} placeholder="in °C" unit='°C' /> */}
       </div>)}
@@ -94,26 +107,26 @@ export const Recipe: React.FC<RecipeProps> = ({updateState, state = initialRecip
       <div className={classes.Recipe__columns}>
         <div className={classes.Recipe__instructions}>
 
-          <CheckList title="Ingredients" items={[
-          `Flour: ${ingredients.flour}g`,
-          `Water: ${ingredients.water - Math.round(ingredients.water*0.1)}g + ${Math.round(ingredients.water*(waterReserve && Number(waterReserve) > 0 ? Number(waterReserve)/100 : 0))}g`,
+          <CheckList title="Ingredients" uniqueKey='Ingredients' render={renderStep} items={[
+          `Flour: {100% of flour}`,
+          `Water: {90% of water} + {10% of water}`,
           `Levin: ${ingredients.levin}g`,
           `Salt: ${ingredients.salt}g`
           ]} />
         
-          <CheckList title="Instructions" items={[
+          <CheckList title="Instructions" uniqueKey='Instructions' render={renderStep} items={[
               `Set Box to ${Number(desiredTemp) + 0.5}°C`,
               `Mix ${ingredients.water - Math.round(ingredients.water*0.1)}g water & ${ingredients.flour}g flour`,
               "Wait 30 min",
-              `Mix ${Math.round(ingredients.water*0.1)}g water & salt`,
-              `Add ${ingredients.levin}g levin & salt water`,
-              "Slap and fold 8-10 times",
+              // `Mix ${Math.round(ingredients.water*0.1)}g water & salt`,
+              // `Add ${ingredients.levin}g levin & salt water`,
+              // "Slap and fold 8-10 times",
               "Wait 30 min",
-              "6 stretch & folds",
-              "Wait 30 min",
-              "Coil fold",
-              "Bulk 3-4 hours",
-              "Wait for 30% increase"
+              // "6 stretch & folds",
+              // "Wait 30 min",
+              // "Coil fold",
+              // "Bulk 3-4 hours",
+              // "Wait for 30% increase"
             ]} 
             editable={true}
             />
