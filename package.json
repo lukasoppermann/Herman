@@ -27,6 +27,6 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.7.0",
     "use-local-storage-state": "^19.4.1",
-    "vite": "^5.4.8"
+    "vite": "^5.4.14"
   }
 }
